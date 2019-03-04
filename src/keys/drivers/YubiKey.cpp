@@ -77,6 +77,11 @@ bool YubiKey::init()
     // TODO: handle multiple attached hardware devices
     m_yk_void = static_cast<void*>(yk_open_first_key());
     if (m_yk == nullptr) {
+    int pids = {0x60fc}; //OnlyKey PID
+    m_yk_void = static_cast<void*>(yk_open_key_vid_pid(0x1d50, pids, 1, 0));
+    }
+    if (m_yk == nullptr) {
+      yk_open_key_vid_pid
         m_mutex.unlock();
         return false;
     }
